@@ -4,19 +4,25 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
+import team.ljm.Main;
+
 public class DisplayWindow {
 	private static final int WIDTH = 1920, HEIGHT = 1080;
 	private static final String TITLE = "CHANGEME";
 
-	public DisplayWindow() {
+	private Main main;
+
+	public DisplayWindow(Main main) {
+		this.main = main;
 	}
 
 	private void setupWindow() {
 		try {
 			Display.setDisplayMode(Display.getDesktopDisplayMode());
-			Display.setFullscreen(true);
+			Display.setFullscreen(false);
 			Display.setTitle(TITLE);
 			Display.create();
+			Display.setVSyncEnabled(true);
 		} catch (LWJGLException ex) {
 			ex.printStackTrace();
 			Display.destroy();
@@ -25,6 +31,16 @@ public class DisplayWindow {
 	}
 
 	private void setupOpenGL() {
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
+
+		GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+
+		GL11.glViewport(0, 0, WIDTH, HEIGHT);
+		GL11.glMatrixMode(GL11.GL_MODELVIEW);
+
 		GL11.glMatrixMode(GL11.GL_PROJECTION);
 		GL11.glLoadIdentity();
 		GL11.glOrtho(0, WIDTH, HEIGHT, 0, 1, -1);
@@ -49,9 +65,6 @@ public class DisplayWindow {
 	}
 
 	private void render() {
-		GL11.glBegin(GL11.GL_LINES);
-		GL11.glVertex2f(0, 0);
-		GL11.glVertex2f(100, 100);
-		GL11.glEnd();
+
 	}
 }
