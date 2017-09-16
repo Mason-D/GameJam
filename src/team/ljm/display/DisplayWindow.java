@@ -2,7 +2,6 @@ package team.ljm.display;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 
 public class DisplayWindow {
@@ -41,7 +40,7 @@ public class DisplayWindow {
 		while (!Display.isCloseRequested()) {
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
 			this.render();
-			
+
 			Display.update();
 			Display.sync(60);
 		}
