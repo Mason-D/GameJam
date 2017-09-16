@@ -12,13 +12,13 @@ import org.newdawn.slick.opengl.TextureLoader;
 import team.ljm.Main;
 
 public class TextureManager {
-	private HashMap<String, Texture> textures;
+	private static HashMap<String, Texture> textures;
 
 	private Main main;
 
 	public TextureManager(Main main) {
 		this.main = main;
-		this.textures = new HashMap<String, Texture>();
+		textures = new HashMap<String, Texture>();
 	}
 
 	public void loadTextures() {
@@ -36,7 +36,7 @@ public class TextureManager {
 		return null;
 	}
 
-	public Texture getTexture(String name) {
-		return this.textures.get(name);
+	public static Texture getTexture(String name) {
+		return textures.get(name);
 	}
 }
