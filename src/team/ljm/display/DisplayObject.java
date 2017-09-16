@@ -10,23 +10,17 @@ public class DisplayObject {
 	private float width, height;
 
 	public DisplayObject() {
-		this(0, 0, null, 0, 0);
+		this(0, 0, null);
 	}
 
 	public DisplayObject(float x, float y) {
-		this(x, y, null, 0, 0);
+		this(x, y, null);
 	}
 
 	public DisplayObject(float x, float y, Texture texture) {
-		this(x, y, texture, texture.getWidth(), texture.getHeight());
-	}
-
-	public DisplayObject(float x, float y, Texture texture, float width, float height) {
 		this.x = x;
 		this.y = y;
 		this.texture = texture;
-		this.width = width;
-		this.height = height;
 	}
 
 	public void draw() {
@@ -34,12 +28,12 @@ public class DisplayObject {
 		GL11.glBegin(GL11.GL_QUADS);
 		GL11.glTexCoord2f(0, 0);
 		GL11.glVertex2f(this.x, this.y);
-		GL11.glTexCoord2f(0, 1);
-		GL11.glVertex2f(this.x + this.width, y);
 		GL11.glTexCoord2f(1, 0);
-		GL11.glVertex2f(this.x, this.y + this.height);
+		GL11.glVertex2f(this.x + texture.getTextureWidth(), this.y);
 		GL11.glTexCoord2f(1, 1);
-		GL11.glVertex2f(this.x + this.width, this.y + this.height);
+		GL11.glVertex2f(this.x + texture.getTextureWidth(), this.y + texture.getTextureHeight());
+		GL11.glTexCoord2f(0, 1);
+		GL11.glVertex2f(this.x, this.y + texture.getTextureHeight());
 		GL11.glEnd();
 	}
 
