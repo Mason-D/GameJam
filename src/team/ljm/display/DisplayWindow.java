@@ -30,6 +30,7 @@ public class DisplayWindow {
 		GL11.glLoadIdentity();
 		GL11.glOrtho(0, WIDTH, HEIGHT, 0, 1, -1);
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
 	}
 
 	public void setup() {
