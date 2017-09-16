@@ -9,14 +9,6 @@ public class DisplayObject {
 	private Texture texture;
 	private float width, height;
 
-	public DisplayObject() {
-		this(0, 0, null);
-	}
-
-	public DisplayObject(float x, float y) {
-		this(x, y, null);
-	}
-
 	public DisplayObject(float x, float y, Texture texture) {
 		this.x = x;
 		this.y = y;

@@ -1,5 +1,8 @@
 package team.ljm.display;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
@@ -11,15 +14,17 @@ public class DisplayWindow {
 	private static final String TITLE = "CHANGEME";
 
 	private Main main;
+	private List<DisplayObject> displayObjects;
 
 	public DisplayWindow(Main main) {
 		this.main = main;
+		this.displayObjects = new ArrayList<DisplayObject>();
 	}
 
 	private void setupWindow() {
 		try {
 			Display.setDisplayMode(Display.getDesktopDisplayMode());
-			Display.setFullscreen(false);
+			Display.setFullscreen(true);
 			Display.setTitle(TITLE);
 			Display.create();
 			Display.setVSyncEnabled(true);
@@ -65,6 +70,17 @@ public class DisplayWindow {
 	}
 
 	private void render() {
+		for (DisplayObject displayObj : this.displayObjects)
+			displayObj.draw();
+	}
 
+	public void registerDisplayObject(DisplayObject displayObject) {
+		this.displayObjects.add(displayObject);
+	}
+
+	public void deregisterDisplayObject(DisplayObject displayObject) {
+		if (!this.displayObjects.contains(displayObject))
+			throw new IllegalArgumentException("That displayObject is not registered!");
+		this.displayObjects.remove(displayObject);
 	}
 }
