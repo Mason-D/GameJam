@@ -33,7 +33,7 @@ public class Menu {
 		this.game.getMain().getWindow().registerDisplayObject(this.start);
 		this.game.getMain().getWindow().registerDisplayObject(this.exit);
 
-	}
+	} 
 
 	public void close() {
 		this.game.getMain().getWindow().deregisterDisplayObject(this.background);
