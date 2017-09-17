@@ -26,6 +26,7 @@ public class TextureManager {
 		textures.put("broom", this.loadTexture("broom"));
 		textures.put("start", this.loadTexture("start"));
 		textures.put("exit", this.loadTexture("exit"));
+		textures.put("introbg", this.loadTexture("introbg"));
 	}
 
 	private Texture loadTexture(String name) {
