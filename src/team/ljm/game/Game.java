@@ -13,6 +13,7 @@ import team.ljm.display.TextureManager;
 import team.ljm.game.menu.Menu;
 import team.ljm.game.objects.CollisionObject;
 import team.ljm.game.objects.Player;
+import team.ljm.game.objects.obstacles.Brooms;
 import team.ljm.game.objects.obstacles.Fire;
 
 public class Game {
@@ -24,6 +25,7 @@ public class Game {
 	private List<Fire> fire;
 	private List<CollisionObject> scrollables;
 	private Player player;
+	private Brooms broom0;
 
 	private GameState gameState;
 
@@ -39,6 +41,7 @@ public class Game {
 			}
 			if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
 				Display.destroy(); // when in the menu key if we click escape then we will exit program
+				System.out.println("Exiting game from Menu state");
 				System.exit(0);
 			}
 
@@ -61,12 +64,12 @@ public class Game {
 					e.printStackTrace();
 				}
 			}
+			broom0.sweep();
 			break;
 		case GAME:
 			for (Fire fire : this.fire) {
 				fire.burn(this.player);
 			}
-			
 			
 			// handle player movement here
 			// handle scrolling here
@@ -95,17 +98,27 @@ public class Game {
 
 		switch (this.gameState) {
 		case MENU:
+			System.out.println("Entered Menu State");
 			this.menu = new Menu(this);
 			this.menu.open();
 			break;
 		case GAME:
-
+			System.out.println("Entered Game State");
+			this.getMain().getWindow().registerDisplayObject(new DisplayObject(0,0, TextureManager.getTexture("background")));
 			break;
 		case INTRO:
+			System.out.println("Entered Intro State");
 			this.introBG = new DisplayObject(0, 0, TextureManager.getTexture("introbg"));
 			this.getMain().getWindow().registerDisplayObject(introBG);
 			break;
 		case PAUSED:
+			System.out.println("Entered Paused State");
+			this.getMain().getWindow().registerDisplayObject(new DisplayObject(0,0, TextureManager.getTexture("background")));
+			
+			//add broom. 
+			broom0 = new Brooms(new Location(50f, 50f), true, 200);
+			this.getMain().getWindow().registerDisplayObject(broom0);
+			
 			this.fire = new ArrayList<Fire>();
 			this.scrollables = new ArrayList<CollisionObject>();
 			break;
