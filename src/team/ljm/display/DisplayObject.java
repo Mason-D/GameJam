@@ -7,25 +7,42 @@ public class DisplayObject {
 
 	private float x, y;
 	private Texture texture;
+	private boolean flipped;
 
 	public DisplayObject(float x, float y, Texture texture) {
 		this.x = x;
 		this.y = y;
 		this.texture = texture;
+		this.flipped = false;
 	}
 
 	public void draw() {
 		this.texture.bind();
 		GL11.glBegin(GL11.GL_QUADS);
-		GL11.glTexCoord2f(0, 0);
-		GL11.glVertex2f(this.x, this.y);
-		GL11.glTexCoord2f(1, 0);
-		GL11.glVertex2f(this.x + texture.getTextureWidth(), this.y);
-		GL11.glTexCoord2f(1, 1);
-		GL11.glVertex2f(this.x + texture.getTextureWidth(), this.y + texture.getTextureHeight());
-		GL11.glTexCoord2f(0, 1);
-		GL11.glVertex2f(this.x, this.y + texture.getTextureHeight());
+		if (flipped) {
+			GL11.glTexCoord2f(0, 0);
+			GL11.glVertex2f(this.x + texture.getTextureWidth(), this.y);
+			GL11.glTexCoord2f(1, 0);
+			GL11.glVertex2f(this.x, this.y);
+			GL11.glTexCoord2f(1, 1);
+			GL11.glVertex2f(this.x, this.y + texture.getTextureHeight());
+			GL11.glTexCoord2f(0, 1);
+			GL11.glVertex2f(this.x + texture.getTextureWidth(), this.y + texture.getTextureHeight());
+		} else {
+			GL11.glTexCoord2f(0, 0);
+			GL11.glVertex2f(this.x, this.y);
+			GL11.glTexCoord2f(1, 0);
+			GL11.glVertex2f(this.x + texture.getTextureWidth(), this.y);
+			GL11.glTexCoord2f(1, 1);
+			GL11.glVertex2f(this.x + texture.getTextureWidth(), this.y + texture.getTextureHeight());
+			GL11.glTexCoord2f(0, 1);
+			GL11.glVertex2f(this.x, this.y + texture.getTextureHeight());
+		}
 		GL11.glEnd();
+	}
+
+	public void flip() {
+		this.flipped = !this.flipped;
 	}
 
 	public float getX() {

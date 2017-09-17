@@ -25,7 +25,7 @@ public class Game {
 	private DisplayObject broom0;
 
 	private boolean broomdirection = true;
-	
+
 	private List<Fire> fire;
 	private List<CollisionObject> scrollables;
 	private Player player;
@@ -46,14 +46,14 @@ public class Game {
 				Display.destroy(); // when in the menu key if we click escape then we will exit program
 				System.exit(0);
 			}
-			if(broomdirection) {
-				if(broom0X > 100) {
+			if (broomdirection) {
+				if (broom0X > 100) {
 					broomdirection = false;
 				} else {
 					broom0X++;
 				}
 			} else {
-				if(broom0X < 50)
+				if (broom0X < 50)
 					broomdirection = true;
 				else
 					broom0X--;
