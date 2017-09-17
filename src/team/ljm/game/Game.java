@@ -1,18 +1,28 @@
 package team.ljm.game;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.GL11;
 
 import team.ljm.Main;
+import team.ljm.display.DisplayObject;
+import team.ljm.display.TextureManager;
 import team.ljm.game.menu.Menu;
+import team.ljm.game.objects.Player;
+import team.ljm.game.objects.obstacles.Fire;
 
 public class Game {
 
 	private Main main;
 
 	private Menu menu;
+	private DisplayObject introBG;
+
+	private List<Fire> fire;
+	private Player player;
 
 	private GameState gameState;
 
@@ -30,9 +40,6 @@ public class Game {
 				Display.destroy(); // when in the menu key if we click escape then we will exit program
 				System.exit(0);
 			}
-			// TO DO: Add a mouse listener that checks if we click on start button (if true
-			// switch state to Frozen state)
-			// if we click exit button do exactly the same as the escape key.
 			break;
 
 		case INTRO: // in this state we only wait for enter or escape keys and display the Text
@@ -53,6 +60,10 @@ public class Game {
 				}
 			}
 			break;
+		case GAME:
+			for (Fire fire : this.fire) {
+				fire.burn(this.player);
+			}
 		}
 	}
 
@@ -64,8 +75,17 @@ public class Game {
 		GameState lastState = this.gameState;
 		this.gameState = state;
 
-		if (lastState == GameState.MENU)
+		switch (lastState) {
+		case MENU:
 			this.menu.close();
+			break;
+		case GAME:
+			this.getMain().getWindow().deregisterDisplayObject(introBG);
+			break;
+		default:
+			break;
+		}
+
 		switch (this.gameState) {
 		case MENU:
 			this.menu = new Menu(this);
@@ -75,7 +95,11 @@ public class Game {
 
 			break;
 		case INTRO:
-			
+			this.introBG = new DisplayObject(0, 0, TextureManager.getTexture("introbg"));
+			this.getMain().getWindow().registerDisplayObject(introBG);
+			break;
+		case PAUSED:
+			this.fire = new ArrayList<Fire>();
 			break;
 		default:
 			break;

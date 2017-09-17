@@ -7,4 +7,8 @@ public class Player extends CollisionObject {
 	public Player(Location startLocation) {
 		super(startLocation, TextureManager.getTexture("player"));
 	}
+	
+	public void kill() {
+		
+	}
 }
