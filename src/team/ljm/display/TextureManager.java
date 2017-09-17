@@ -22,6 +22,7 @@ public class TextureManager {
 	}
 
 	public void loadTextures() {
+		textures.put("player", this.loadTexture("player"));
 		textures.put("menubg", this.loadTexture("menubg"));
 		textures.put("background", this.loadTexture("background"));
 		textures.put("broom", this.loadTexture("broom"));

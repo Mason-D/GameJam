@@ -41,7 +41,10 @@ public class Game {
 				Display.destroy(); // when in the menu key if we click escape then we will exit program
 				System.exit(0);
 			}
-
+			if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
+				setGameState(GameState.PAUSED);
+			}
+			
 			break;
 
 		case INTRO: // in this state we only wait for enter or escape keys and display the Text
@@ -61,15 +64,13 @@ public class Game {
 					e.printStackTrace();
 				}
 			}
+			
 			break;
 		case GAME:
+			player.handleMovement();
 			for (Fire fire : this.fire) {
 				fire.burn(this.player);
 			}
-			
-			
-			// handle player movement here
-			// handle scrolling here
 			break;
 		}
 	}
@@ -99,13 +100,14 @@ public class Game {
 			this.menu.open();
 			break;
 		case GAME:
-
 			break;
 		case INTRO:
 			this.introBG = new DisplayObject(0, 0, TextureManager.getTexture("introbg"));
 			this.getMain().getWindow().registerDisplayObject(introBG);
 			break;
 		case PAUSED:
+			this.player = new Player(new Location(100, 500));
+			this.getMain().getWindow().registerDisplayObject(this.player);
 			this.fire = new ArrayList<Fire>();
 			this.scrollables = new ArrayList<CollisionObject>();
 			break;

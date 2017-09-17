@@ -25,7 +25,7 @@ public class Menu {
 		Location exitLocation = startLocation.add(0, TextureManager.getTexture("start").getTextureHeight() + 25);
 		this.start = new MenuObject(startLocation, true);
 		this.exit = new MenuObject(exitLocation, false);
-		background = new DisplayObject(0, 0, TextureManager.getTexture("menubg"));
+		background = new DisplayObject(0, 0, TextureManager.getTexture("background"));
 	}
 
 	public void open() {
