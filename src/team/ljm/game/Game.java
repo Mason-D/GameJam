@@ -74,17 +74,17 @@ public class Game {
 	public void setGameState(GameState state) {
 		GameState lastState = this.gameState;
 		this.gameState = state;
-
-		switch (lastState) {
-		case MENU:
-			this.menu.close();
-			break;
-		case GAME:
-			this.getMain().getWindow().deregisterDisplayObject(introBG);
-			break;
-		default:
-			break;
-		}
+		if (lastState != null)
+			switch (lastState) {
+			case MENU:
+				this.menu.close();
+				break;
+			case GAME:
+				this.getMain().getWindow().deregisterDisplayObject(introBG);
+				break;
+			default:
+				break;
+			}
 
 		switch (this.gameState) {
 		case MENU:
