@@ -7,7 +7,6 @@ public class DisplayObject {
 
 	private float x, y;
 	private Texture texture;
-	private float width, height;
 
 	public DisplayObject(float x, float y, Texture texture) {
 		this.x = x;
@@ -41,14 +40,6 @@ public class DisplayObject {
 		return this.texture;
 	}
 
-	public float getWidth() {
-		return this.width;
-	}
-
-	public float getHeight() {
-		return this.height;
-	}
-
 	public void setX(float x) {
 		this.x = x;
 	}
@@ -59,13 +50,5 @@ public class DisplayObject {
 
 	public void setTexture(Texture texture) {
 		this.texture = texture;
-	}
-
-	public void setWidth(float width) {
-		this.width = width;
-	}
-
-	public void setHeight(float height) {
-		this.height = height;
 	}
 }

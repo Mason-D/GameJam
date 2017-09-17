@@ -22,7 +22,8 @@ public class TextureManager {
 	}
 
 	public void loadTextures() {
-		textures.put("test", this.loadTexture("test"));
+		textures.put("background", this.loadTexture("background"));
+		textures.put("broom", this.loadTexture("broom"));
 	}
 
 	private Texture loadTexture(String name) {

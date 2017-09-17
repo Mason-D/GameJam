@@ -1,7 +1,7 @@
 package team.ljm.game.objects.obstacles;
 
 public enum ObstacleType {
-	PLATFORM("platform"), INCENERATOR("incenerator"), WALL("wall");
+	PLATFORM("platform"), INCINERATOR("incinerator"), WALL("wall");
 
 	private String file;
 
