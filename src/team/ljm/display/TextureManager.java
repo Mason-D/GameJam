@@ -32,6 +32,7 @@ public class TextureManager {
 		textures.put("fire2", this.loadTexture("fire2"));
 		textures.put("fire3", this.loadTexture("fire3"));
 		textures.put("BroomFlip",  this.loadTexture("BroomFlip"));
+		textures.put("title", this.loadTexture("title"));
 	}
 
 	private Texture loadTexture(String name) {
