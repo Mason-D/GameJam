@@ -15,4 +15,13 @@ public class Location {
 	public float getY() {
 		return this.y;
 	}
+
+	public Location add(float x, float y) {
+		return new Location(this.getX() + x, this.getY() + y);
+	}
+
+	public static boolean locationWithinBox(Location loc, Location upperLeftCorner, Location lowerRightCorner) {
+		return upperLeftCorner.getX() <= loc.getX() && lowerRightCorner.getX() >= loc.getX()
+				&& upperLeftCorner.getY() <= loc.getY() && lowerRightCorner.getY() >= loc.getY();
+	}
 }
