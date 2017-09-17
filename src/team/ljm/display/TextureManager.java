@@ -22,6 +22,7 @@ public class TextureManager {
 	}
 
 	public void loadTextures() {
+		textures.put("backgroundWithEnemies", this.loadTexture("backgroundWithEnemies"));
 		textures.put("background", this.loadTexture("background"));
 		textures.put("broom", this.loadTexture("broom"));
 		textures.put("start", this.loadTexture("start"));
