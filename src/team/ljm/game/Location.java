@@ -15,6 +15,14 @@ public class Location {
 	public float getY() {
 		return this.y;
 	}
+	
+	public void setX(float x) {
+		this.x = x;
+	}
+	
+	public void setY(float y) {
+		this.y = y;
+	}
 
 	public Location add(float x, float y) {
 		return new Location(this.getX() + x, this.getY() + y);
