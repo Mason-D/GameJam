@@ -12,7 +12,6 @@ import team.ljm.display.DisplayObject;
 import team.ljm.display.TextureManager;
 import team.ljm.game.menu.Menu;
 import team.ljm.game.objects.Player;
-import team.ljm.game.objects.obstacles.Brooms;
 import team.ljm.game.objects.obstacles.Fire;
 import team.ljm.game.stage.StageManager;
 
@@ -50,9 +49,7 @@ public class Game {
 			if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
 				setGameState(GameState.PAUSED);
 			}
-			
 			break;
-
 		case INTRO: // in this state we only wait for enter or escape keys and display the Text
 					// about the game story
 			if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
@@ -70,15 +67,12 @@ public class Game {
 					e.printStackTrace();
 				}
 			}
-			
 			break;
 		case GAME:
 			player.handleMovement();
 			for (Fire fire : this.fire) {
 				fire.burn(this.player);
 			}
-			// handle player movement here
-			// handle scrolling here
 			break;
 		}
 	}
@@ -127,10 +121,10 @@ public class Game {
 		case PAUSED:
 			System.out.println("Entered Paused State");
 			this.player = new Player(new Location(100, 500));
-			this.getMain().getWindow().registerDisplayObject(this.player);			
+			this.getMain().getWindow().registerDisplayObject(this.player);
 			this.gameBG = new DisplayObject(0, 0, TextureManager.getTexture("background"));
 			this.getMain().getWindow().registerDisplayObject(this.gameBG);
-			
+
 			this.fire = new ArrayList<Fire>();
 			break;
 		default:

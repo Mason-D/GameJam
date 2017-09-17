@@ -16,6 +16,6 @@ public class MenuObject extends DisplayObject {
 	}
 
 	public Location getLowerRight() {
-		return this.getUpperLeft().add(this.getTexture().getTextureWidth(), this.getTexture().getTextureHeight());
+		return this.getUpperLeft().add(this.getTexture().getImageWidth(), this.getTexture().getImageHeight());
 	}
 }
