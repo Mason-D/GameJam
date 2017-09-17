@@ -44,18 +44,16 @@ public class Game {
 				setGameState(GameState.MENU); // if enter is pressed we go to the next state which is the menu.
 			break;
 		case PAUSED:
-			if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
+			if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
 				setGameState(GameState.MENU);
-			try {
-				Thread.sleep(200);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				try {
+					Thread.sleep(200);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 			break;
-
 		}
-
 	}
 
 	public GameState getState() {
