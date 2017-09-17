@@ -11,6 +11,7 @@ import team.ljm.Main;
 import team.ljm.display.DisplayObject;
 import team.ljm.display.TextureManager;
 import team.ljm.game.menu.Menu;
+import team.ljm.game.objects.CollisionObject;
 import team.ljm.game.objects.Player;
 import team.ljm.game.objects.obstacles.Fire;
 
@@ -22,6 +23,7 @@ public class Game {
 	private DisplayObject introBG;
 
 	private List<Fire> fire;
+	private List<CollisionObject> scrollables;
 	private Player player;
 
 	private GameState gameState;
@@ -64,6 +66,10 @@ public class Game {
 			for (Fire fire : this.fire) {
 				fire.burn(this.player);
 			}
+
+			// handle player movement here
+			// handle scrolling here
+			break;
 		}
 	}
 
@@ -79,7 +85,7 @@ public class Game {
 			case MENU:
 				this.menu.close();
 				break;
-			case GAME:
+			case INTRO:
 				this.getMain().getWindow().deregisterDisplayObject(introBG);
 				break;
 			default:
@@ -100,6 +106,7 @@ public class Game {
 			break;
 		case PAUSED:
 			this.fire = new ArrayList<Fire>();
+			this.scrollables = new ArrayList<CollisionObject>();
 			break;
 		default:
 			break;

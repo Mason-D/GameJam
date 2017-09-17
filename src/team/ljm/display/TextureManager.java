@@ -27,6 +27,9 @@ public class TextureManager {
 		textures.put("start", this.loadTexture("start"));
 		textures.put("exit", this.loadTexture("exit"));
 		textures.put("introbg", this.loadTexture("introbg"));
+		textures.put("fire1", this.loadTexture("fire1"));
+		textures.put("fire2", this.loadTexture("fire2"));
+		textures.put("fire3", this.loadTexture("fire3"));
 	}
 
 	private Texture loadTexture(String name) {
