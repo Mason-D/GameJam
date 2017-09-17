@@ -19,7 +19,7 @@ public class Main {
 	private void run() {
 		this.window.setup();
 		this.textureManager.loadTextures();
-		this.game.setGameState(GameState.MENU);
+		this.game.setGameState(GameState.INTRO);
 		this.window.start();
 	}
 
