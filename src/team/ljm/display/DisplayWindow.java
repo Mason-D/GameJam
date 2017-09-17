@@ -58,15 +58,13 @@ public class DisplayWindow {
 	}
 
 	public void start() {
-		while (!Display.isCloseRequested()) {
+		while (true) {
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
 			this.main.getGame().tick();
 			this.render();
 			Display.update();
 			Display.sync(60);
 		}
-		Display.destroy();
-		System.exit(0);
 	}
 
 	private void render() {

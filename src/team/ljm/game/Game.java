@@ -1,5 +1,8 @@
 package team.ljm.game;
 
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.Display;
+
 import team.ljm.Main;
 import team.ljm.display.DisplayObject;
 import team.ljm.display.TextureManager;
@@ -16,7 +19,20 @@ public class Game {
 	}
 
 	public void tick() {
-	}
+		switch(this.gameState) {
+		case MENU: 
+			if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
+				try {
+					Display.destroy();
+				} catch(Exception e){
+					e.printStackTrace();	
+				}
+					
+				}
+			}
+				
+		}
+	
 
 	public GameState getState() {
 		return this.gameState;
