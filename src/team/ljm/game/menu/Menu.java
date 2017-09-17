@@ -20,9 +20,10 @@ public class Menu {
 	public Menu(Game game) {
 		this.game = game;
 		Location startLocation = new Location(
-				(Display.getWidth() / 2) - (TextureManager.getTexture("start").getTextureWidth() / 2),
-				(Display.getHeight() / 2) - (TextureManager.getTexture("start").getTextureHeight() / 2));
-		Location exitLocation = startLocation.add(0, TextureManager.getTexture("start").getTextureHeight() + 25);
+				(Display.getWidth() / 2) - (2 * TextureManager.getTexture("start").getImageWidth()),
+				Display.getHeight() - (3.5F * TextureManager.getTexture("start").getImageHeight()));
+		System.out.println(startLocation);
+		Location exitLocation = startLocation.add(TextureManager.getTexture("start").getImageWidth() * 3, 0);
 		this.start = new MenuObject(startLocation, true);
 		this.exit = new MenuObject(exitLocation, false);
 		background = new DisplayObject(0, 0, TextureManager.getTexture("background"));
