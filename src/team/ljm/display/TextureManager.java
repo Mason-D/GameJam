@@ -24,7 +24,6 @@ public class TextureManager {
 	public void loadTextures() {
 		textures.put("platform", this.loadTexture("platform"));
 		textures.put("player", this.loadTexture("player"));
-		textures.put("menubg", this.loadTexture("menubg"));
 		textures.put("background", this.loadTexture("background"));
 		textures.put("broom", this.loadTexture("broom"));
 		textures.put("start", this.loadTexture("start"));
@@ -34,6 +33,7 @@ public class TextureManager {
 		textures.put("fire2", this.loadTexture("fire2"));
 		textures.put("fire3", this.loadTexture("fire3"));
 		textures.put("BroomFlip",  this.loadTexture("BroomFlip"));
+		textures.put("title", this.loadTexture("title"));
 	}
 
 	private Texture loadTexture(String name) {

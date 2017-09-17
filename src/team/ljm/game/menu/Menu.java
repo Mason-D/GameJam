@@ -15,23 +15,28 @@ public class Menu {
 	private MenuObject start;
 	private MenuObject exit;
 
+	private DisplayObject title;
 	private DisplayObject background;
 
 	public Menu(Game game) {
 		this.game = game;
 		Location startLocation = new Location(
-				(Display.getWidth() / 2) - (TextureManager.getTexture("start").getTextureWidth() / 2),
-				(Display.getHeight() / 2) - (TextureManager.getTexture("start").getTextureHeight() / 2));
-		Location exitLocation = startLocation.add(0, TextureManager.getTexture("start").getTextureHeight() + 25);
+				(Display.getWidth() / 2) - (TextureManager.getTexture("start").getImageWidth() / 2),
+				(Display.getHeight() / 2));
+		Location exitLocation = startLocation.add(0, 1.95F * TextureManager.getTexture("start").getImageHeight());
 		this.start = new MenuObject(startLocation, true);
 		this.exit = new MenuObject(exitLocation, false);
 		background = new DisplayObject(0, 0, TextureManager.getTexture("background"));
+		this.title = new DisplayObject(
+				(Display.getWidth() / 2F) - (TextureManager.getTexture("title").getImageWidth() / 2F),
+				TextureManager.getTexture("title").getImageHeight() * 1.5F, TextureManager.getTexture("title"));
 	}
 
 	public void open() {
 		this.game.getMain().getWindow().registerDisplayObject(this.background);
 		this.game.getMain().getWindow().registerDisplayObject(this.start);
 		this.game.getMain().getWindow().registerDisplayObject(this.exit);
+		this.game.getMain().getWindow().registerDisplayObject(this.title);
 
 	}
 
@@ -39,6 +44,8 @@ public class Menu {
 		this.game.getMain().getWindow().deregisterDisplayObject(this.background);
 		this.game.getMain().getWindow().deregisterDisplayObject(this.start);
 		this.game.getMain().getWindow().deregisterDisplayObject(this.exit);
+		this.game.getMain().getWindow().deregisterDisplayObject(this.title );
+
 	}
 
 	public void click(Location location) {

@@ -32,6 +32,10 @@ public class Location {
 		return upperLeftCorner.getX() <= loc.getX() && lowerRightCorner.getX() >= loc.getX()
 				&& upperLeftCorner.getY() <= loc.getY() && lowerRightCorner.getY() >= loc.getY();
 	}
+	
+	public Location copy() {
+		return new Location(this.getX(), this.getY());
+	}
 
 	@Override
 	public String toString() {
