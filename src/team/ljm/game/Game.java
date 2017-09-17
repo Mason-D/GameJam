@@ -42,6 +42,12 @@ public class Game {
 				System.exit(0);
 			} else if (Keyboard.isKeyDown(Keyboard.KEY_RETURN) || Keyboard.isKeyDown(Keyboard.KEY_SPACE))
 				setGameState(GameState.MENU); // if enter is pressed we go to the next state which is the menu.
+			break;
+		case PAUSED:
+			if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
+				setGameState(GameState.MENU);
+			break;
+		
 		}
 	}
 
