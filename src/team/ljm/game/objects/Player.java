@@ -43,7 +43,12 @@ public class Player extends CollisionObject {
 		this.setY(this.getY() + 5f);
 	}
 	
+	/*
+	 * If the player is killed, the location is set back to the 
+	 * start location.
+	 */
 	public void kill() {
-		
+		this.setX(100);
+		this.setY(500);	
 	}
 }
