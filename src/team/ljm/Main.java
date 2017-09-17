@@ -21,6 +21,7 @@ public class Main {
 		this.textureManager.loadTextures();
 		this.game.setGameState(GameState.INTRO);
 		this.window.start();
+
 	}
 
 	public Game getGame() {
