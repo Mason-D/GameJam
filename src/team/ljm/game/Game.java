@@ -1,7 +1,15 @@
 package team.ljm.game;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -29,6 +37,8 @@ public class Game {
 	private GameState gameState;
 
 	private StageManager stageManager;
+
+	private Clip clip;
 
 	public Game(Main main) {
 		this.main = main;
@@ -110,14 +120,17 @@ public class Game {
 			switch (lastState) {
 			case MENU:
 				this.menu.close();
+				this.clip.stop();
 				break;
 			case INTRO:
 				this.getMain().getWindow().deregisterDisplayObject(introBG);
+				this.clip.stop();
 				break;
 			case PAUSED:
 				break;
 			case GAME:
 				this.getMain().getWindow().deregisterDisplayObject(this.gameBG);
+				this.clip.stop();
 				break;
 			default:
 				break;
@@ -128,14 +141,17 @@ public class Game {
 			System.out.println("Entered Menu State");
 			this.menu = new Menu(this);
 			this.menu.open();
+			this.playClip("menu");
 			break;
 		case GAME:
 			System.out.println("Entered Game State");
 			this.getMain().getWindow().registerDisplayObject(this.gameBG);
 			this.getMain().getWindow().registerDisplayObject(this.player);
+			this.playClip("game");
 			break;
 		case INTRO:
 			System.out.println("Entered Intro State");
+			this.playClip("intro");
 			this.stageManager.buildStages();
 			this.introBG = new DisplayObject(0, 0, TextureManager.getTexture("introbg"));
 			this.getMain().getWindow().registerDisplayObject(introBG);
@@ -166,4 +182,25 @@ public class Game {
 		return this.main;
 	}
 
+	private void playClip(String name) {
+		File f = new File("res/" + name + ".wav");
+		AudioInputStream audioIn = null;
+		try {
+			audioIn = AudioSystem.getAudioInputStream(f.toURI().toURL());
+		} catch (UnsupportedAudioFileException | IOException e2) {
+			e2.printStackTrace();
+		}
+		this.clip = null;
+		try {
+			this.clip = AudioSystem.getClip();
+		} catch (LineUnavailableException e1) {
+			e1.printStackTrace();
+		}
+		try {
+			this.clip.open(audioIn);
+		} catch (LineUnavailableException | IOException e) {
+			e.printStackTrace();
+		}
+		this.clip.start();
+	}
 }
