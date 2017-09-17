@@ -11,9 +11,9 @@ import team.ljm.Main;
 import team.ljm.display.DisplayObject;
 import team.ljm.display.TextureManager;
 import team.ljm.game.menu.Menu;
-import team.ljm.game.objects.CollisionObject;
 import team.ljm.game.objects.Player;
 import team.ljm.game.objects.obstacles.Fire;
+import team.ljm.game.stage.StageManager;
 
 public class Game {
 
@@ -21,14 +21,18 @@ public class Game {
 
 	private Menu menu;
 	private DisplayObject introBG;
+	private DisplayObject gameBG;
+
 	private List<Fire> fire;
-	private List<CollisionObject> scrollables;
 	private Player player;
 
 	private GameState gameState;
 
+	private StageManager stageManager;
+
 	public Game(Main main) {
 		this.main = main;
+		this.stageManager = new StageManager(this);
 	}
 
 	public void tick() {
@@ -66,8 +70,7 @@ public class Game {
 			for (Fire fire : this.fire) {
 				fire.burn(this.player);
 			}
-			
-			
+
 			// handle player movement here
 			// handle scrolling here
 			break;
@@ -89,6 +92,12 @@ public class Game {
 			case INTRO:
 				this.getMain().getWindow().deregisterDisplayObject(introBG);
 				break;
+			case PAUSED:
+				this.getMain().getWindow().deregisterDisplayObject(this.gameBG);
+				break;
+			case GAME:
+				this.getMain().getWindow().deregisterDisplayObject(this.gameBG);
+				break;
 			default:
 				break;
 			}
@@ -99,19 +108,29 @@ public class Game {
 			this.menu.open();
 			break;
 		case GAME:
-
+			this.getMain().getWindow().registerDisplayObject(this.gameBG);
 			break;
 		case INTRO:
+			this.stageManager.buildStages();
 			this.introBG = new DisplayObject(0, 0, TextureManager.getTexture("introbg"));
 			this.getMain().getWindow().registerDisplayObject(introBG);
 			break;
 		case PAUSED:
+			this.gameBG = new DisplayObject(0, 0, TextureManager.getTexture("background"));
+			this.getMain().getWindow().registerDisplayObject(this.gameBG);
 			this.fire = new ArrayList<Fire>();
-			this.scrollables = new ArrayList<CollisionObject>();
 			break;
 		default:
 			break;
 		}
+	}
+
+	public void addFire(Fire fire) {
+		this.fire.add(fire);
+	}
+
+	public void removeFire(Fire fire) {
+		this.fire.remove(fire);
 	}
 
 	public Main getMain() {
