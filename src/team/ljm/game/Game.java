@@ -142,7 +142,7 @@ public class Game {
 			break;
 		case PAUSED:
 			System.out.println("Entered Paused State");
-			this.player = new Player(new Location(100f, 500f));
+			this.player = new Player(new Location(-235f, 745f));		
 			this.gameBG = new DisplayObject(0, 0, TextureManager.getTexture("background"));
 			this.getMain().getWindow().registerDisplayObject(this.gameBG);
 			this.getMain().getWindow().registerDisplayObject(this.player);

@@ -7,7 +7,8 @@ import team.ljm.game.Location;
 
 public class Player extends CollisionObject {
 	
-	private final int jumpheight = 20;
+	private boolean jumping = false;
+	private float jumpingDif;
 	
 	
 	public Player(Location startLocation) {
@@ -18,15 +19,18 @@ public class Player extends CollisionObject {
 	 * Method that handles player movement
 	 */
 	public void handleMovement() {
+		
+		if(jumping) {
+			this.goUp();
+		} else if(Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
+			jumpingDif = 30f;
+			this.jump();
+		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT) || Keyboard.isKeyDown(Keyboard.KEY_A)) {
 			this.moveToLeft();
 		} else if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT) || Keyboard.isKeyDown(Keyboard.KEY_D)) {
 			this.moveToRight();
-		} else if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
-			this.jump();
-		} else if (Keyboard.isKeyDown(Keyboard.KEY_DOWN) || Keyboard.isKeyDown(Keyboard.KEY_S)) {
-			this.goDown();
-		}
+		} 
 	
 	}
 	
@@ -40,13 +44,14 @@ public class Player extends CollisionObject {
 	}
 	
 	public void jump() {
-		for(int i = 0; i < jumpheight; i++) {
-			this.setY(this.getY()- 5f);
-		}
+		jumping = true;
 	}
 	
-	public void goDown() {
-		this.setY(this.getY() + 5f);
+	public void goUp() {
+		this.setY(this.getY() - jumpingDif);
+		jumpingDif--;
+		if(jumpingDif < -30f)
+			jumping = false;
 	}
 	
 	public void kill() {
