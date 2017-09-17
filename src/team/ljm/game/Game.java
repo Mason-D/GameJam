@@ -47,8 +47,9 @@ public class Game {
 			if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
 				setGameState(GameState.MENU);
 			break;
-		
+
 		}
+
 	}
 
 	public GameState getState() {
