@@ -42,7 +42,7 @@ public class Menu {
 	}
 
 	public void click(Location location) {
-		System.out.println(TextureManager.getTexture("start").getTextureHeight());
+		System.out.println(location + "\n" + this.start.getUpperLeft() + "\n" + this.start.getLowerRight() + "\n");
 		if (Location.locationWithinBox(location, this.start.getUpperLeft(), this.start.getLowerRight())) {
 			this.game.setGameState(GameState.GAME);
 		} else if (Location.locationWithinBox(location, this.exit.getUpperLeft(), this.exit.getLowerRight())) {
