@@ -57,7 +57,7 @@ public class Game {
 				System.exit(0);
 			}
 			if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
-				setGameState(GameState.PAUSED);
+				setGameState(GameState.INTRO);
 				try {
 					Thread.sleep(200);
 				} catch (InterruptedException e) {
@@ -68,10 +68,9 @@ public class Game {
 		case INTRO: // in this state we only wait for enter or escape keys and display the Text
 					// about the game story
 			if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
-				Display.destroy();
-				System.exit(0);
+				setGameState(GameState.MENU);
 			} else if (Keyboard.isKeyDown(Keyboard.KEY_RETURN) || Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
-				setGameState(GameState.MENU); // if enter is pressed we go to the next state which is the menu.
+				setGameState(GameState.PAUSED); // if enter is pressed we go to the next state which is the menu.
 				try {
 					Thread.sleep(200);
 				} catch (InterruptedException e) {
@@ -139,6 +138,7 @@ public class Game {
 		switch (this.gameState) {
 		case MENU:
 			System.out.println("Entered Menu State");
+			this.stageManager.buildStages();
 			this.menu = new Menu(this);
 			this.menu.open();
 			this.playClip("menu");
@@ -152,7 +152,6 @@ public class Game {
 		case INTRO:
 			System.out.println("Entered Intro State");
 			this.playClip("intro");
-			this.stageManager.buildStages();
 			this.introBG = new DisplayObject(0, 0, TextureManager.getTexture("introbg"));
 			this.getMain().getWindow().registerDisplayObject(introBG);
 			break;

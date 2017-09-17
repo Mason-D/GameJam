@@ -51,7 +51,7 @@ public class Menu {
 	public void click(Location location) {
 		location.setY(Display.getHeight() - location.getY());
 		if (Location.locationWithinBox(location, this.start.getUpperLeft(), this.start.getLowerRight())) {
-			this.game.setGameState(GameState.PAUSED);
+			this.game.setGameState(GameState.INTRO);
 		} else if (Location.locationWithinBox(location, this.exit.getUpperLeft(), this.exit.getLowerRight())) {
 			Display.destroy();
 			System.exit(0);
