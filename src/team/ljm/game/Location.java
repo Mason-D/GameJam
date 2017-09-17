@@ -24,4 +24,14 @@ public class Location {
 		return upperLeftCorner.getX() <= loc.getX() && lowerRightCorner.getX() >= loc.getX()
 				&& upperLeftCorner.getY() <= loc.getY() && lowerRightCorner.getY() >= loc.getY();
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("x: ");
+		builder.append(x);
+		builder.append(" y: ");
+		builder.append(y);
+		return builder.toString();
+	}
 }

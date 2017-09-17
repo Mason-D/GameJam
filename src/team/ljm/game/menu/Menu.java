@@ -33,7 +33,7 @@ public class Menu {
 		this.game.getMain().getWindow().registerDisplayObject(this.start);
 		this.game.getMain().getWindow().registerDisplayObject(this.exit);
 
-	} 
+	}
 
 	public void close() {
 		this.game.getMain().getWindow().deregisterDisplayObject(this.background);
@@ -42,6 +42,7 @@ public class Menu {
 	}
 
 	public void click(Location location) {
+		System.out.println(TextureManager.getTexture("start").getTextureHeight());
 		if (Location.locationWithinBox(location, this.start.getUpperLeft(), this.start.getLowerRight())) {
 			this.game.setGameState(GameState.GAME);
 		} else if (Location.locationWithinBox(location, this.exit.getUpperLeft(), this.exit.getLowerRight())) {

@@ -24,7 +24,7 @@ public class DisplayWindow {
 	private void setupWindow() {
 		try {
 			Display.setDisplayMode(Display.getDesktopDisplayMode());
-			Display.setFullscreen(true);
+			Display.setFullscreen(false);
 			Display.setTitle(TITLE);
 			Display.create();
 			Display.setVSyncEnabled(true);

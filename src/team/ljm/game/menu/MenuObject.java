@@ -8,7 +8,7 @@ public class MenuObject extends DisplayObject {
 
 	public MenuObject(Location location, boolean startButton) {
 		super(location.getX(), location.getY(),
-				startButton ? TextureManager.getTexture("startButton") : TextureManager.getTexture("exitButton"));
+				startButton ? TextureManager.getTexture("start") : TextureManager.getTexture("exit"));
 	}
 
 	public Location getUpperLeft() {
@@ -16,6 +16,6 @@ public class MenuObject extends DisplayObject {
 	}
 
 	public Location getLowerRight() {
-		return new Location(this.getX() + this.getTexture().getWidth(), this.getY() + this.getTexture().getHeight());
+		return this.getUpperLeft().add(this.getTexture().getTextureWidth(), this.getTexture().getTextureHeight());
 	}
 }
