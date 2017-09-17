@@ -21,11 +21,6 @@ public class Game {
 
 	private Menu menu;
 	private DisplayObject introBG;
-	private int broom0X = 50;
-	private DisplayObject broom0;
-
-	private boolean broomdirection = true;
-	
 	private List<Fire> fire;
 	private List<CollisionObject> scrollables;
 	private Player player;
@@ -46,19 +41,7 @@ public class Game {
 				Display.destroy(); // when in the menu key if we click escape then we will exit program
 				System.exit(0);
 			}
-			if(broomdirection) {
-				if(broom0X > 100) {
-					broomdirection = false;
-				} else {
-					broom0X++;
-				}
-			} else {
-				if(broom0X < 50)
-					broomdirection = true;
-				else
-					broom0X--;
-			}
-			broom0.setX(broom0X);
+
 			break;
 
 		case INTRO: // in this state we only wait for enter or escape keys and display the Text
@@ -83,6 +66,8 @@ public class Game {
 			for (Fire fire : this.fire) {
 				fire.burn(this.player);
 			}
+			
+			
 			// handle player movement here
 			// handle scrolling here
 			break;
@@ -112,8 +97,6 @@ public class Game {
 		case MENU:
 			this.menu = new Menu(this);
 			this.menu.open();
-			broom0 = new DisplayObject(broom0X, 0, TextureManager.getTexture("broom"));
-			this.getMain().getWindow().registerDisplayObject(broom0);
 			break;
 		case GAME:
 
