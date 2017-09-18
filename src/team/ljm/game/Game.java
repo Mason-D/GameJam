@@ -114,15 +114,28 @@ public class Game {
 				fire.burn(this.player);
 			}
 			for (Brooms br : this.brooms) {
-				br.sweep();
+				br.sweep(this.player);
 			}
 			player.handleMovement();
+			if (player.getX() >= Display.getWidth()) {
+				this.stageManager.nextStage();
+				if (this.stageManager.isGameOver()) {
+					
+				} else {
+					this.setGameState(GameState.PAUSED);
+					this.player.setX(50);
+				}
+			}
 			break;
 		}
 	}
 
 	public GameState getState() {
 		return this.gameState;
+	}
+
+	public List<Platform> getPlatforms() {
+		return this.platform;
 	}
 
 	public void setGameState(GameState state) {
@@ -151,20 +164,19 @@ public class Game {
 		switch (this.gameState) {
 		case MENU:
 			System.out.println("Entered Menu State");
+			if (player != null)
+				this.player = null;
 			this.fire = new ArrayList<Fire>();
 			this.brooms = new ArrayList<Brooms>();
 			this.platform = new ArrayList<Platform>();
 			this.stageManager.buildStages();
-			// this.stageManager.registerObjects(stageManager.returnStage());
 			this.menu = new Menu(this);
 			this.menu.open();
 			this.playClip("menu");
 			break;
 		case GAME:
 			System.out.println("Entered Game State");
-			// this.getMain().getWindow().registerDisplayObject(this.gameBG);
 			this.getMain().getWindow().registerDisplayObject(this.player);
-			this.stageManager.registerObjects(stageManager.returnStage());
 			this.playClip("game");
 			break;
 		case INTRO:
@@ -176,12 +188,13 @@ public class Game {
 		case PAUSED:
 			System.out.println("Entered Paused State");
 			this.fire = new ArrayList<Fire>();
-			Stage s1 = this.stageManager.getStages().get(0);
-			this.player = new Player(new Location(50F, 925F));
+			Stage stage = this.stageManager.getCurrentStage();
+			if (player == null)
+				this.player = new Player(new Location(50F, StageManager.PATH), this);
 			this.gameBG = new DisplayObject(0, 0, TextureManager.getTexture("background"));
-			// this.getMain().getWindow().registerDisplayObject(this.gameBG);
+			this.getMain().getWindow().registerDisplayObject(this.gameBG);
 			this.getMain().getWindow().registerDisplayObject(this.player);
-			this.stageManager.registerObjects(stageManager.returnStage());
+			this.stageManager.registerObjects(stage);
 			break;
 		default:
 			break;

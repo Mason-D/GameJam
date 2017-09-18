@@ -14,7 +14,7 @@ public class Fire extends CollisionObject {
 	private Texture fire1, fire2, fire3;
 
 	public Fire(Location location) {
-		super(location, TextureManager.getTexture("fire1"));
+		super(location, TextureManager.getTexture("fire1"), 0);
 		animation = 0;
 		this.fire1 = TextureManager.getTexture("fire1");
 		this.fire2 = TextureManager.getTexture("fire2");
@@ -22,17 +22,19 @@ public class Fire extends CollisionObject {
 	}
 
 	public void burn(Player player) {
-		if (animation == 5)
+		if (animation == 7)
 			this.setTexture(this.fire2);
-		else if (animation == 10)
+		else if (animation == 14)
 			this.setTexture(this.fire3);
-		else if (animation == 15) {
+		else if (animation == 21) {
 			this.setTexture(this.fire1);
 			this.animation = 0;
 		}
-		/*if (this.collides(new Location(player.getX(), player.getY()))) {
+		if (this.collides(new Location(player.getX(), player.getY()))
+				|| this.collides(new Location(player.getX() + player.getTexture().getImageWidth(),
+						player.getY() + player.getTexture().getImageHeight()))) {
 			player.kill();
-		}*/
+		}
 		animation++;
 	}
 }

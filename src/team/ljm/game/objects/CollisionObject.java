@@ -18,9 +18,9 @@ public class CollisionObject extends DisplayObject {
 	}
 
 	public boolean collides(Location location) {
-		return (this.getX() + additionalHitbox) >= location.getX()
-				&& (this.getY() + additionalHitbox) >= location.getY()
-				&& (this.getX() - additionalHitbox) <= (location.getX() + this.getTexture().getWidth())
-				&& (this.getY() - additionalHitbox) <= (location.getY() + this.getTexture().getHeight());
+		return Location.locationWithinBox(location,
+				new Location(this.getX() - this.additionalHitbox, this.getY() - this.additionalHitbox),
+				new Location(this.getX() + this.getTexture().getImageWidth() + this.additionalHitbox,
+						this.getY() + this.getTexture().getImageHeight() + this.additionalHitbox));
 	}
 }

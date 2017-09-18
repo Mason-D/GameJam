@@ -12,12 +12,20 @@ import team.ljm.game.objects.obstacles.Platform;
 
 public class StageManager {
 
+	public static final int PATH = 925;
+
+	private boolean gameOver;
+
 	private Game game;
-	private List<Stage> stages;
+	private Stage[] stages;
+
+	private int stageIndex;
 
 	public StageManager(Game game) {
 		this.game = game;
-		this.stages = new ArrayList<Stage>();
+		this.stages = new Stage[5];
+		this.stageIndex = 0;
+		this.gameOver = false;
 	}
 
 	public void registerObjects(Stage stage) {
@@ -44,45 +52,27 @@ public class StageManager {
 		}
 	}
 
-	public void buildStages() {
-		Stage testStage = new Stage();
-		Fire fire1 = new Fire(new Location(700, 800));
-		Fire fire2 = new Fire(new Location(1000, 850));
-		Fire fire3 = new Fire(new Location(1400, 800));
-		Fire fire4 = new Fire(new Location(400, 850));
-		Fire fire5 = new Fire(new Location(1600, 800));
-		Brooms broom1 = new Brooms(new Location(400, 900), true, 100);
-		Brooms broom2 = new Brooms(new Location(1000, 900), true, 100f);
-		Brooms broom3 = new Brooms(new Location(1500, 950), true, 100f);
-		Brooms broom5 = new Brooms(new Location(1800, 950), true, 100f);
-		Platform platform1 = new Platform(new Location(300, 700));
-		Platform platform2 = new Platform(new Location(750, 750));
-		Platform platform3 = new Platform(new Location(1000, 700));
-		Platform platform4 = new Platform(new Location(1200, 750));
-		Platform platform5 = new Platform(new Location(1600, 700));
-		testStage.addObject(fire1);
-		testStage.addObject(fire2);
-		testStage.addObject(fire3);
-		testStage.addObject(fire4);
-		testStage.addObject(fire5);
-		testStage.addObject(broom1);
-		testStage.addObject(broom2);
-		testStage.addObject(broom3);
-		testStage.addObject(broom5);
-		testStage.addObject(platform1);
-		testStage.addObject(platform2);
-		testStage.addObject(platform3);
-		testStage.addObject(platform4);
-		testStage.addObject(platform5);
-		this.stages.add(testStage);
-		System.out.println("built stages");
+	public void buildStages() {		
+		System.out.println("Built Stages");
 	}
-	
-	public Stage returnStage() {
-		return stages.get(0);
+
+	public Stage getCurrentStage() {
+		return this.stages[this.stageIndex];
 	}
-	
-	public List<Stage> getStages() {
+
+	public void nextStage() {
+		if (this.stageIndex == this.stages.length - 1)
+			this.gameOver = true;
+		else
+			this.stageIndex++;
+	}
+
+
+	public Stage[] getStages() {
 		return this.stages;
+	}
+
+	public boolean isGameOver() {
+		return this.gameOver;
 	}
 }
