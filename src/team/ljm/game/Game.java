@@ -44,14 +44,21 @@ public class Game {
 	private StageManager stageManager;
 
 	private Clip clip;
+	private boolean playingGame;
 
 	public Game(Main main) {
 		this.main = main;
 		this.stageManager = new StageManager(this);
+		this.playingGame = false;
 	}
 
 	public void tick() {
 		switch (this.gameState) {
+		case OVER:
+			if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
+				this.setGameState(GameState.MENU);
+			}
+			break;
 		case MENU:
 			if (Mouse.isButtonDown(0)) {
 				this.menu.click(new Location(Mouse.getX(), Mouse.getY()));
@@ -97,6 +104,23 @@ public class Game {
 					|| Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
 				setGameState(GameState.GAME);
 			}
+			if (Keyboard.isKeyDown(Keyboard.KEY_RETURN)) {
+				this.stageManager.nextStage();
+				this.fire = new ArrayList<Fire>();
+				this.brooms = new ArrayList<Brooms>();
+				this.platform = new ArrayList<Platform>();
+				if (this.stageManager.isGameOver()) {
+					this.setGameState(GameState.OVER);
+				} else {
+					this.setGameState(GameState.PAUSED);
+					this.player.setX(50);
+				}
+				try {
+					Thread.sleep(200);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
 
 			break;
 		case GAME:
@@ -123,7 +147,7 @@ public class Game {
 				this.brooms = new ArrayList<Brooms>();
 				this.platform = new ArrayList<Platform>();
 				if (this.stageManager.isGameOver()) {
-
+					this.setGameState(GameState.OVER);
 				} else {
 					this.setGameState(GameState.PAUSED);
 					this.player.setX(50);
@@ -148,7 +172,6 @@ public class Game {
 			switch (lastState) {
 			case MENU:
 				this.menu.close();
-				this.clip.stop();
 				break;
 			case INTRO:
 				this.getMain().getWindow().deregisterDisplayObject(introBG);
@@ -158,15 +181,25 @@ public class Game {
 				break;
 			case GAME:
 				this.getMain().getWindow().deregisterDisplayObject(this.gameBG);
-				this.clip.stop();
 				break;
 			default:
 				break;
 			}
 
 		switch (this.gameState) {
+		case OVER:
+			this.clip.stop();
+			this.playClip("intro");
+			DisplayObject outro = new DisplayObject(0, 0, TextureManager.getTexture("outrobg"));
+			this.getMain().getWindow().clearRegistry();
+			this.getMain().getWindow().registerDisplayObject(outro);
+			break;
 		case MENU:
 			System.out.println("Entered Menu State");
+			if (this.clip != null) {
+				this.clip.stop();
+				this.playingGame = false;
+			}
 			if (player != null)
 				this.player = null;
 			this.fire = new ArrayList<Fire>();
@@ -178,11 +211,15 @@ public class Game {
 			this.playClip("menu");
 			break;
 		case GAME:
+			if (!this.playingGame) {
+				this.playClip("game");
+				this.playingGame = true;
+			}
 			System.out.println("Entered Game State");
 			this.getMain().getWindow().registerDisplayObject(this.player);
-			this.playClip("game");
 			break;
 		case INTRO:
+			this.clip.stop();
 			System.out.println("Entered Intro State");
 			this.playClip("intro");
 			this.introBG = new DisplayObject(0, 0, TextureManager.getTexture("introbg"));

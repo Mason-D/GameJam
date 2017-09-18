@@ -26,7 +26,7 @@ public class StageManager {
 
 	public StageManager(Game game) {
 		this.game = game;
-		this.stages = new Stage[5];
+		this.stages = new Stage[4];
 		this.stageIndex = 0;
 		this.gameOver = false;
 	}
@@ -88,8 +88,20 @@ public class StageManager {
 						PATH - 150 - TextureManager.getTexture("fire1").getImageHeight())));
 		s3.addObject(new Brooms(new Location((Display.getWidth() * 2) / 3, PATH - 95), true, 100F));
 		s3.addObject(new Platform(new Location(
-				(Display.getWidth() / 2) - (TextureManager.getTexture("platform").getImageWidth() / 2) + 100, PATH - 250)));
+				(Display.getWidth() / 2) - (TextureManager.getTexture("platform").getImageWidth() / 2) + 100,
+				PATH - 250)));
+		s3.addObject(new Platform(new Location((Display.getWidth() * 2) / 3, PATH - 300)));
+		s3.addObject(new Fire(new Location((Display.getWidth() * 2) / 3,
+				PATH - 300 - TextureManager.getTexture("fire1").getImageHeight())));
 		this.stages[2] = s3;
+
+		Stage s4 = new Stage();
+		s4.addObject(new Brooms(new Location(300, PATH - 95), true, 100F));
+		s4.addObject(new Brooms(new Location(600, PATH - 95), false, 100F));
+		s4.addObject(new Brooms(new Location(1000, PATH - 95), true, 100F));
+		s4.addObject(new Brooms(new Location(1300, PATH - 95), false, 100F));
+		s4.addObject(new Brooms(new Location(1600, PATH - 95), true, 100F));
+		this.stages[3] = s4;
 	}
 
 	public Stage getCurrentStage() {

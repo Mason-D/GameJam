@@ -81,4 +81,8 @@ public class DisplayWindow {
 			throw new IllegalArgumentException("That displayObject is not registered!");
 		this.displayObjects.remove(displayObject);
 	}
+
+	public void clearRegistry() {
+		this.displayObjects = new ArrayList<DisplayObject>();
+	}
 }

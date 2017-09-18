@@ -1,5 +1,5 @@
 package team.ljm.game;
 
 public enum GameState {
-	MENU, INTRO, GAME, PAUSED
+	MENU, INTRO, GAME, PAUSED, OVER
 }

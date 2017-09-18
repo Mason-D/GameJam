@@ -10,8 +10,11 @@ import team.ljm.game.stage.StageManager;
 
 public class Player extends CollisionObject {
 
-	private boolean onGround = true;
-	private boolean onPlatform = false;
+	private boolean onGround;
+	private boolean onPlatform;
+
+	private boolean jumping;
+	private int maxJump;
 
 	private float jumpingDif;
 	private Location startLocation;
@@ -21,6 +24,10 @@ public class Player extends CollisionObject {
 		super(startLocation, TextureManager.getTexture("player"));
 		this.startLocation = startLocation;
 		this.game = game;
+		this.jumping = false;
+		this.onGround = true;
+		this.onPlatform = false;
+		this.maxJump = 0;
 	}
 
 	/*
@@ -29,8 +36,10 @@ public class Player extends CollisionObject {
 	public void handleMovement() {
 		if (this.getY() < StageManager.PATH)
 			this.onGround = false;
-		else
+		else {
 			this.onGround = true;
+			this.jumping = false;
+		}
 
 		boolean tempCheck = false;
 		for (Platform plat : this.game.getPlatforms()) {
@@ -38,6 +47,7 @@ public class Player extends CollisionObject {
 					&& this.getX() + this.getTexture().getImageWidth() >= plat.getX()
 					&& this.getX() <= plat.getX() + plat.getWidth() && this.jumpingDif <= 0) {
 				this.onPlatform = true;
+				this.jumping = false;
 				tempCheck = true;
 			}
 		}
@@ -47,8 +57,9 @@ public class Player extends CollisionObject {
 		if (!onGround && !onPlatform) {
 			this.handleGravity();
 		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE) && (this.onGround || this.onPlatform)) {
-			this.jump();
+		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
+			if (!this.jumping && (this.onGround || this.onPlatform))
+				this.jump();
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT) || Keyboard.isKeyDown(Keyboard.KEY_A)) {
 			this.moveToLeft();
@@ -66,8 +77,10 @@ public class Player extends CollisionObject {
 	}
 
 	public void jump() {
+		this.maxJump = 0;
 		this.onGround = false;
-		this.jumpingDif = 30F;
+		this.jumping = true;
+		this.jumpingDif = 20F;
 		this.setY(this.getY() - 1F);
 	}
 
@@ -85,6 +98,7 @@ public class Player extends CollisionObject {
 						&& this.getX() + this.getTexture().getImageWidth() >= plat.getX()
 						&& this.getX() <= plat.getX() + plat.getWidth()) {
 					this.onPlatform = true;
+					this.jumping = false;
 					this.jumpingDif = 0;
 					this.setY(plat.getY() - this.getTexture().getImageHeight());
 					break outer;
@@ -94,8 +108,12 @@ public class Player extends CollisionObject {
 	}
 
 	public void handleGravity() {
+		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE) && this.maxJump < 15 && this.jumpingDif > 0) {
+			this.maxJump++;
+		} else {
+			this.jumpingDif--;
+		}
 		this.changeY(jumpingDif);
-		jumpingDif--;
 		if (this.getY() > StageManager.PATH)
 			this.setY(StageManager.PATH);
 	}
