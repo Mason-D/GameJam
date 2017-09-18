@@ -20,7 +20,9 @@ import team.ljm.display.DisplayObject;
 import team.ljm.display.TextureManager;
 import team.ljm.game.menu.Menu;
 import team.ljm.game.objects.Player;
+import team.ljm.game.objects.obstacles.Brooms;
 import team.ljm.game.objects.obstacles.Fire;
+import team.ljm.game.objects.obstacles.Platform;
 import team.ljm.game.stage.StageManager;
 
 public class Game {
@@ -31,7 +33,9 @@ public class Game {
 	private DisplayObject introBG;
 	private DisplayObject gameBG;
 
+	private List<Brooms> brooms;
 	private List<Fire> fire;
+	private List<Platform> platform;
 	private Player player;
 
 	private GameState gameState;
@@ -66,7 +70,7 @@ public class Game {
 			}
 			break;
 		case INTRO: // in this state we only wait for enter or escape keys and display the Text
-					// about the game story
+			// about the game story
 			if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
 				setGameState(GameState.MENU);
 			} else if (Keyboard.isKeyDown(Keyboard.KEY_RETURN) || Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
@@ -87,9 +91,12 @@ public class Game {
 					e.printStackTrace();
 				}
 			}
-			if (Keyboard.isKeyDown(Keyboard.KEY_D))
+			if (Keyboard.isKeyDown(Keyboard.KEY_D) || Keyboard.isKeyDown(Keyboard.KEY_RIGHT) 
+		       || Keyboard.isKeyDown(Keyboard.KEY_A) || Keyboard.isKeyDown(Keyboard.KEY_LEFT)
+		       || Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
 				setGameState(GameState.GAME);
-
+			}
+				
 			break;
 		case GAME:
 			if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
@@ -100,10 +107,15 @@ public class Game {
 					e.printStackTrace();
 				}
 			}
-			player.handleMovement();
+			
 			for (Fire fire : this.fire) {
+				//System.out.print("HI");
 				fire.burn(this.player);
 			}
+			for (Brooms br : this.brooms) {
+				br.sweep();
+			}
+			player.handleMovement();
 			break;
 		}
 	}
@@ -138,7 +150,11 @@ public class Game {
 		switch (this.gameState) {
 		case MENU:
 			System.out.println("Entered Menu State");
+			this.fire = new ArrayList<Fire>();
+			this.brooms = new ArrayList<Brooms>();
+			this.platform = new ArrayList<Platform>();
 			this.stageManager.buildStages();
+			//this.stageManager.registerObjects(stageManager.returnStage());
 			this.menu = new Menu(this);
 			this.menu.open();
 			this.playClip("menu");
@@ -147,7 +163,8 @@ public class Game {
 			System.out.println("Entered Game State");
 			this.getMain().getWindow().registerDisplayObject(this.gameBG);
 			this.getMain().getWindow().registerDisplayObject(this.player);
-			this.playClip("game");
+			this.stageManager.registerObjects(stageManager.returnStage());
+            this.playClip("game");
 			break;
 		case INTRO:
 			System.out.println("Entered Intro State");
@@ -161,8 +178,7 @@ public class Game {
 			this.gameBG = new DisplayObject(0, 0, TextureManager.getTexture("background"));
 			this.getMain().getWindow().registerDisplayObject(this.gameBG);
 			this.getMain().getWindow().registerDisplayObject(this.player);
-
-			this.fire = new ArrayList<Fire>();
+			this.stageManager.registerObjects(stageManager.returnStage());
 			break;
 		default:
 			break;
@@ -181,6 +197,22 @@ public class Game {
 		return this.main;
 	}
 
+	public void addBrooms(Brooms br) {
+		this.brooms.add(br);	
+	}
+	
+	public void removeBrooms(Brooms br) {
+		this.brooms.add(br);
+	}
+	
+	public void addPlatform(Platform pf) {
+		this.platform.add(pf);
+	}
+	
+	public void removePlatform(Platform pf) {
+		this.platform.add(pf);
+	}
+	
 	private void playClip(String name) {
 		File f = new File("res/" + name + ".wav");
 		AudioInputStream audioIn = null;
@@ -202,4 +234,4 @@ public class Game {
 		}
 		this.clip.start();
 	}
-}
+ }

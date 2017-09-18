@@ -9,7 +9,7 @@ public class Platform extends CollisionObject {
 	 * Constructor for objects of type platform.
 	 */
 	public Platform (Location location) {
-		super(location, TextureManager.getTexture("Platform"));	
+		super(location, TextureManager.getTexture("platform"));	
 
 	}
 	
