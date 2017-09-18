@@ -3,6 +3,9 @@ package team.ljm.game.stage;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.lwjgl.opengl.Display;
+
+import team.ljm.display.TextureManager;
 import team.ljm.game.Game;
 import team.ljm.game.Location;
 import team.ljm.game.objects.CollisionObject;
@@ -52,8 +55,41 @@ public class StageManager {
 		}
 	}
 
-	public void buildStages() {		
+	public void buildStages() {
 		System.out.println("Built Stages");
+		Stage s1 = new Stage();
+		Brooms b1 = new Brooms(
+				new Location((Display.getWidth() / 2) - (TextureManager.getTexture("broom").getImageWidth() / 2),
+						PATH - 95),
+				true, 100F);
+		Platform p1 = new Platform(new Location(
+				(Display.getWidth() / 2) - (TextureManager.getTexture("platform").getImageWidth() / 2), PATH - 150));
+		s1.addObject(b1);
+		s1.addObject(p1);
+		this.stages[0] = s1;
+
+		Stage s2 = new Stage();
+		s2.addObject(new Fire(new Location(
+				(Display.getWidth() / 2) - (TextureManager.getTexture("fire1").getImageWidth() / 2), PATH)));
+		s2.addObject(p1);
+		this.stages[1] = s2;
+
+		Stage s3 = new Stage();
+		s3.addObject(new Brooms(new Location(300, PATH - 95), true, 100F));
+		s3.addObject(new Platform(new Location(300, PATH - 150)));
+		s3.addObject(new Platform(new Location(
+				(Display.getWidth() / 2) - (TextureManager.getTexture("platform").getImageWidth() / 2) - 300,
+				PATH - 500)));
+		s3.addObject(new Platform(new Location(
+				(Display.getWidth() / 2) - (TextureManager.getTexture("platform").getImageWidth() / 2) - 300,
+				PATH - 150)));
+		s3.addObject(new Fire(
+				new Location((Display.getWidth() / 2) - (TextureManager.getTexture("fire1").getImageWidth() / 2) - 300,
+						PATH - 150 - TextureManager.getTexture("fire1").getImageHeight())));
+		s3.addObject(new Brooms(new Location((Display.getWidth() * 2) / 3, PATH - 95), true, 100F));
+		s3.addObject(new Platform(new Location(
+				(Display.getWidth() / 2) - (TextureManager.getTexture("platform").getImageWidth() / 2) + 100, PATH - 250)));
+		this.stages[2] = s3;
 	}
 
 	public Stage getCurrentStage() {
@@ -66,7 +102,6 @@ public class StageManager {
 		else
 			this.stageIndex++;
 	}
-
 
 	public Stage[] getStages() {
 		return this.stages;

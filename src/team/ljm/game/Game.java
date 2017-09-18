@@ -119,8 +119,11 @@ public class Game {
 			player.handleMovement();
 			if (player.getX() >= Display.getWidth()) {
 				this.stageManager.nextStage();
+				this.fire = new ArrayList<Fire>();
+				this.brooms = new ArrayList<Brooms>();
+				this.platform = new ArrayList<Platform>();
 				if (this.stageManager.isGameOver()) {
-					
+
 				} else {
 					this.setGameState(GameState.PAUSED);
 					this.player.setX(50);

@@ -36,7 +36,7 @@ public class Player extends CollisionObject {
 		for (Platform plat : this.game.getPlatforms()) {
 			if (this.getY() == plat.getY() - this.getTexture().getImageHeight()
 					&& this.getX() + this.getTexture().getImageWidth() >= plat.getX()
-					&& this.getX() <= plat.getX() + plat.getWidth()) {
+					&& this.getX() <= plat.getX() + plat.getWidth() && this.jumpingDif <= 0) {
 				this.onPlatform = true;
 				tempCheck = true;
 			}
@@ -74,6 +74,10 @@ public class Player extends CollisionObject {
 	private void changeY(float distance) {
 		if (this.onPlatform || this.onGround)
 			return;
+		if (this.getY() - distance < 0) {
+			this.jumpingDif = 0;
+			return;
+		}
 		outer: for (int i = 0; i < Math.abs(distance); i++) {
 			this.setY(this.getY() - (distance >= 0 ? 1 : -1));
 			for (Platform plat : this.game.getPlatforms()) {
