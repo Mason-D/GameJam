@@ -23,6 +23,7 @@ import team.ljm.game.objects.Player;
 import team.ljm.game.objects.obstacles.Brooms;
 import team.ljm.game.objects.obstacles.Fire;
 import team.ljm.game.objects.obstacles.Platform;
+import team.ljm.game.stage.Stage;
 import team.ljm.game.stage.StageManager;
 
 public class Game {
@@ -73,13 +74,13 @@ public class Game {
 			// about the game story
 			if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
 				setGameState(GameState.MENU);
-			} else if (Keyboard.isKeyDown(Keyboard.KEY_RETURN) || Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
-				setGameState(GameState.PAUSED); // if enter is pressed we go to the next state which is the menu.
 				try {
 					Thread.sleep(200);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
+			} else if (Keyboard.isKeyDown(Keyboard.KEY_RETURN) || Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
+				setGameState(GameState.PAUSED); // if enter is pressed we go to the next state which is the menu.
 			}
 			break;
 		case PAUSED:
@@ -91,12 +92,12 @@ public class Game {
 					e.printStackTrace();
 				}
 			}
-			if (Keyboard.isKeyDown(Keyboard.KEY_D) || Keyboard.isKeyDown(Keyboard.KEY_RIGHT) 
-		       || Keyboard.isKeyDown(Keyboard.KEY_A) || Keyboard.isKeyDown(Keyboard.KEY_LEFT)
-		       || Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
+			if (Keyboard.isKeyDown(Keyboard.KEY_D) || Keyboard.isKeyDown(Keyboard.KEY_RIGHT)
+					|| Keyboard.isKeyDown(Keyboard.KEY_A) || Keyboard.isKeyDown(Keyboard.KEY_LEFT)
+					|| Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
 				setGameState(GameState.GAME);
 			}
-				
+
 			break;
 		case GAME:
 			if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
@@ -107,9 +108,9 @@ public class Game {
 					e.printStackTrace();
 				}
 			}
-			
+
 			for (Fire fire : this.fire) {
-				//System.out.print("HI");
+				// System.out.print("HI");
 				fire.burn(this.player);
 			}
 			for (Brooms br : this.brooms) {
@@ -154,17 +155,17 @@ public class Game {
 			this.brooms = new ArrayList<Brooms>();
 			this.platform = new ArrayList<Platform>();
 			this.stageManager.buildStages();
-			//this.stageManager.registerObjects(stageManager.returnStage());
+			// this.stageManager.registerObjects(stageManager.returnStage());
 			this.menu = new Menu(this);
 			this.menu.open();
 			this.playClip("menu");
 			break;
 		case GAME:
 			System.out.println("Entered Game State");
-			this.getMain().getWindow().registerDisplayObject(this.gameBG);
+			// this.getMain().getWindow().registerDisplayObject(this.gameBG);
 			this.getMain().getWindow().registerDisplayObject(this.player);
 			this.stageManager.registerObjects(stageManager.returnStage());
-            this.playClip("game");
+			this.playClip("game");
 			break;
 		case INTRO:
 			System.out.println("Entered Intro State");
@@ -174,9 +175,11 @@ public class Game {
 			break;
 		case PAUSED:
 			System.out.println("Entered Paused State");
+			this.fire = new ArrayList<Fire>();
+			Stage s1 = this.stageManager.getStages().get(0);
 			this.player = new Player(new Location(50F, 925F));
 			this.gameBG = new DisplayObject(0, 0, TextureManager.getTexture("background"));
-			this.getMain().getWindow().registerDisplayObject(this.gameBG);
+			// this.getMain().getWindow().registerDisplayObject(this.gameBG);
 			this.getMain().getWindow().registerDisplayObject(this.player);
 			this.stageManager.registerObjects(stageManager.returnStage());
 			break;
@@ -198,21 +201,21 @@ public class Game {
 	}
 
 	public void addBrooms(Brooms br) {
-		this.brooms.add(br);	
+		this.brooms.add(br);
 	}
-	
+
 	public void removeBrooms(Brooms br) {
 		this.brooms.add(br);
 	}
-	
+
 	public void addPlatform(Platform pf) {
 		this.platform.add(pf);
 	}
-	
+
 	public void removePlatform(Platform pf) {
 		this.platform.add(pf);
 	}
-	
+
 	private void playClip(String name) {
 		File f = new File("res/" + name + ".wav");
 		AudioInputStream audioIn = null;
@@ -234,4 +237,4 @@ public class Game {
 		}
 		this.clip.start();
 	}
- }
+}
